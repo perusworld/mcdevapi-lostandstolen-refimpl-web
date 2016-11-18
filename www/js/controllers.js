@@ -130,7 +130,6 @@ angular.module('pos.controllers', [])
                 template: msg
             });
             alertPopup.then(function (res) {
-                console.log('Thank you for not eating my delicious ice cream cone');
             });
         };
 
@@ -158,16 +157,21 @@ angular.module('pos.controllers', [])
 
     }])
 
-    .controller('PaymentDoneCtrl', ['$scope', '$state', '$ionicHistory', '$ionicLoading', 'orderCart', function ($scope, $state, $ionicHistory, $ionicLoading, orderCart) {
+    .controller('PaymentDoneCtrl', ['$scope', '$state', '$ionicHistory', '$ionicLoading', '$ionicNavBarDelegate', 'orderCart', function ($scope, $state, $ionicHistory, $ionicLoading, $ionicNavBarDelegate, orderCart) {
         $scope.confirmation = orderCart.response;
 
         $scope.$on('$ionicView.beforeEnter', function () {
+            $ionicNavBarDelegate.showBackButton(false);
             orderCart.clear();
 
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
                 disableBack: true
             });
+        });
+
+        $scope.$on('$ionicView.beforeLeave', function () {
+            $ionicNavBarDelegate.showBackButton(true);
         });
 
 
@@ -267,7 +271,6 @@ angular.module('pos.controllers', [])
                         }
                     ];
                 }
-                console.log($scope.chartData);
             });
         };
         $scope.all = function () {
@@ -295,7 +298,6 @@ angular.module('pos.controllers', [])
                         "values": $scope.chart.prog
                     }
                 ];
-                console.log($scope.chartData);
             });
         };
         $scope.todays();
