@@ -68,12 +68,18 @@ app.post('/checkAccountNumber', function(req, res) {
         };
         lostStolen.AccountInquiry.update(requestData, function(error, data) {
             if (error) {
-                console.error("An error occurred");
-                console.dir(error, { depth: null });
                 res.json({
-                    MerchantCategoryCodeList: {
-                        MerchantCategoryCodeArray: {
-                            MerchantCategoryCode: []
+                    "type": "APIError",
+                    "message": "Error executing API call",
+                    "status": 400,
+                    "data": {
+                        "Errors": {
+                            "Error": {
+                                "Source": "Unknown",
+                                "ReasonCode": "UNKNOWN",
+                                "Description": "Unknown error",
+                                "Recoverable": "false"
+                            }
                         }
                     }
                 });
