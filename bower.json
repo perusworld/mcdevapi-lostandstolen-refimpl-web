@@ -1,12 +1,12 @@
 {
-  "name": "pos-starter",
+  "name": "mcdevapi-lostandstolen-refimpl-web",
   "authors": [
     "Saravana Perumal Shanmugam <saravanaperumal@msn.com>"
   ],
-  "description": "Point Of Sale Starter App Ionic",
+  "description": "Mastercard Developer API - Lost and Stolen Account List - Reference Implementation - Angular/Web",
   "main": "",
   "license": "MIT",
-  "homepage": "https://github.com/perusworld/pos-starter",
+  "homepage": "https://github.com/perusworld/mcdevapi-lostandstolen-refimpl-web",
   "private": true,
   "ignore": [
     "**/.*",

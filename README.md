@@ -1,12 +1,12 @@
-# Point Of Sale Starter App Ionic/Express #
+# Mastercard Developer API - Lost and Stolen Account List - Reference Implementation - Angular/Express #
 
-## [Demo](https://perusworld.github.io/pos-starter/) ##
+## [Demo](https://perusworld.github.io/mcdevapi-lostandstolen-refimpl-web/) ##
 
 ## Setup ##
 
 1.Checkout the code
 ```bash
-git clone https://github.com/perusworld/pos-starter.git
+git clone https://github.com/perusworld/mcdevapi-lostandstolen-refimpl-web.git
 ```
 2.Run bower install
 ```bash
