@@ -1,0 +1,126 @@
+{
+    "510510510": {
+        "type": "APIError",
+        "message": "Error executing API call",
+        "status": 400,
+        "data": {
+            "Errors": {
+                "Error": {
+                    "Source": "Service Provider",
+                    "ReasonCode": "INVALID_INPUT_VALUE",
+                    "Description": "The card provided is an invalid card number.",
+                    "Recoverable": "true"
+                }
+            }
+        }
+    },
+    "5105105105105100": {
+        "Account": {
+            "Status": true,
+            "Listed": true,
+            "ReasonCode": "F",
+            "Reason": "FRAUD"
+        }
+    },
+    "5222222222222200": {
+        "Account": {
+            "Status": true,
+            "Listed": true,
+            "ReasonCode": "L",
+            "Reason": "LOST"
+        }
+    },
+    "5305305305305300": {
+        "Account": {
+            "Status": true,
+            "Listed": true,
+            "ReasonCode": "P",
+            "Reason": "CAPTURE CARD"
+        }
+    },
+    "5343434343434343": {
+        "Account": {
+            "Status": true,
+            "Listed": true,
+            "ReasonCode": "S",
+            "Reason": "STOLEN"
+        }
+    },
+    "6011111111111117": {
+        "Account": {
+            "Status": true,
+            "Listed": true,
+            "ReasonCode": "U",
+            "Reason": "UNAUTHORIZED USE"
+        }
+    },
+    "4444333322221111": {
+        "Account": {
+            "Status": true,
+            "Listed": true,
+            "ReasonCode": "X",
+            "Reason": "COUNTERFEIT"
+        }
+    },
+    "343434343434343": {
+        "Account": {
+            "Status": true,
+            "Listed": false,
+            "ReasonCode": "",
+            "Reason": ""
+        }
+    },
+    "510510510510510A": {
+        "type": "APIError",
+        "message": "Error executing API call",
+        "status": 400,
+        "data": {
+            "Errors": {
+                "Error": {
+                    "Source": "Service Provider",
+                    "ReasonCode": "INVALID_INPUT_VALUE",
+                    "Description": "The card provided is an invalid card number.",
+                    "Recoverable": "true"
+                }
+            }
+        }
+    },
+    "5151515151515151": {
+        "type": "APIError",
+        "message": "Error executing API call",
+        "status": 400,
+        "data": {
+            "Errors": {
+                "Error": {
+                    "Source": "Service Provider",
+                    "ReasonCode": "SERVICE_ERROR",
+                    "Description": "There was an error in the downstream service. Please try again later.",
+                    "Recoverable": "true"
+                }
+            }
+        }
+    },
+    "default": {
+        "Account": {
+            "Status": true,
+            "Listed": false,
+            "ReasonCode": "",
+            "Reason": ""
+        }
+    },
+    "defaultError": {
+        "type": "APIError",
+        "message": "Error executing API call",
+        "status": 400,
+        "data": {
+            "Errors": {
+                "Error": {
+                    "Source": "Service Provider",
+                    "ReasonCode": "INVALID_INPUT_VALUE",
+                    "Description": "The card provided is an invalid card number.",
+                    "Recoverable": "true"
+                }
+            }
+        }
+    }
+}
