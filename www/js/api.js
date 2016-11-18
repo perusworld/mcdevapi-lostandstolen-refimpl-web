@@ -63,11 +63,11 @@ angular.module('pos.api', [])
         var ret = {
             dummyData: null,
             get: function(accountNumber) {
-                var ret = ret.dummyData[req.accountNumber];
+                var resp = ret.dummyData[accountNumber];
                 if (null == ret) {
-                    ret = ret.dummyData.default;
+                    resp = ret.dummyData.default;
                 }
-                return ret;
+                return resp;
             },
             getResponse: function(POSApi, req, callback) {
                 if (null == ret.dummyData) {
@@ -83,13 +83,13 @@ angular.module('pos.api', [])
         return ret;
     }])
 
-    .service('LostAndFoundApi', ['$http', 'DummyAccountsList', function($http, DummyAccountsList) {
+    .service('LostAndFoundApi', ['$http', 'POSApi', 'DummyAccountsList', function($http, POSApi, DummyAccountsList) {
         var ret = {
             checkAccountNumber: function(req, callback) {
                 $http.post('/checkAccountNumber', req).then(function successCallback(response) {
                     callback(response.data)
                 }, function errorCallback(response) {
-                    DummyAccountsList.getResponse(ret, req, callback);
+                    DummyAccountsList.getResponse(POSApi, req, callback);
                 });
             }
         };
@@ -143,4 +143,3 @@ angular.module('pos.api', [])
         return ret;
 
     }]);
-
