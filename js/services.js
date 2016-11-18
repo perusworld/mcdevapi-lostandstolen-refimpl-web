@@ -1,18 +1,18 @@
 angular.module('pos.services', [])
 
-    .factory('Session', ['$rootScope', function($rootScope) {
+    .factory('Session', ['$rootScope', function ($rootScope) {
         var Session = {
             data: {},
-            set: function(key, value) {
+            set: function (key, value) {
                 Session.data[key] = value;
             },
-            get: function(key) {
+            get: function (key) {
                 return Session.data[key];
             },
-            getCached: function(key, loader, callback) {
+            getCached: function (key, loader, callback) {
                 if (null == Session.data[key]) {
                     console.log('Not in cache loading');
-                    loader(function(data) {
+                    loader(function (data) {
                         Session.data[key] = data;
                         callback(data);
                     });
@@ -21,13 +21,13 @@ angular.module('pos.services', [])
                     callback(Session.data[key]);
                 }
             },
-            getCurrentPosition: function(callback) {
+            getCurrentPosition: function (callback) {
                 var ret = Session.data['CurrentPosition'];
                 if (null == ret) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
                         Session.data['CurrentPosition'] = position;
                         callback(position);
-                    }, function(error) {
+                    }, function (error) {
                         Session.data['CurrentPosition'] = null;
                         callback(null);
                     });
@@ -35,11 +35,11 @@ angular.module('pos.services', [])
                     callback(ret);
                 };
             },
-            fireEvent: function(msgId, args) {
+            fireEvent: function (msgId, args) {
                 $rootScope.$broadcast(msgId, args);
             },
-            onEvent: function(msgId, handler) {
-                $rootScope.$on(msgId, function(event, args) {
+            onEvent: function (msgId, handler) {
+                $rootScope.$on(msgId, function (event, args) {
                     handler(args);
                 });
             }
@@ -47,7 +47,7 @@ angular.module('pos.services', [])
         return Session;
     }])
 
-    .service('orderCart', [function() {
+    .service('orderCart', [function () {
         var orderCart = {
             id: "110",
             counter: 110,
@@ -65,10 +65,10 @@ angular.module('pos.services', [])
             },
             response: {
             },
-            init: function() {
+            init: function () {
             },
-            add: function(item) {
-                var existing = this.entries.find(function(entry) {
+            add: function (item) {
+                var existing = this.entries.find(function (entry) {
                     return entry.item.id === item.id;
                 });
                 if (null == existing) {
@@ -83,7 +83,7 @@ angular.module('pos.services', [])
                 this.count++;
                 this.total += item.priceValue;
             },
-            clear: function() {
+            clear: function () {
                 this.counter += 1;
                 this.id = "" + orderCart.counter;
                 this.entries = [];
@@ -104,17 +104,17 @@ angular.module('pos.services', [])
         return orderCart;
     }])
 
-    .service('dongleSwipe', ['moment', function(moment) {
+    .service('dongleSwipe', ['moment', function (moment) {
         var dongleSwipe = {
             initialized: false,
             connected: false,
-            init: function() {
+            init: function () {
                 if (!this.initialized) {
                     this.initialized = true;
                     this.connected = true;
                 }
             },
-            startSwipe: function(callback) {
+            startSwipe: function (callback) {
                 callback({
                     first_name: "Saravana",
                     last_name: "Shanmugam",
@@ -128,15 +128,15 @@ angular.module('pos.services', [])
         };
         return dongleSwipe;
     }])
-    .factory('POSService', function(POSApi, LostAndFoundService, Session) {
+    .factory('POSService', function (POSApi, LostAndFoundService, Session) {
         var ret = {
-            groupSize: function() {
+            groupSize: function () {
                 return 3;
             },
-            group: function(array, blocks) {
+            group: function (array, blocks) {
                 var ret = [];
                 var block = [];
-                array.forEach(function(entry) {
+                array.forEach(function (entry) {
                     if (block.length == blocks) {
                         ret.push(block);
                         block = []
@@ -151,62 +151,62 @@ angular.module('pos.services', [])
                 }
                 return ret;
             },
-            menu: function(cached, callback) {
+            menu: function (cached, callback) {
                 if (cached) {
-                    Session.getCached('menu', function(loaderCallback) {
-                        POSApi.menu(function(data) {
+                    Session.getCached('menu', function (loaderCallback) {
+                        POSApi.menu(function (data) {
                             if (null != data) {
                                 loaderCallback(data.menu);
                             }
                         });
-                    }, function(data) {
+                    }, function (data) {
                         callback(data);
                     });
                 } else {
-                    POSApi.menu(function(data) {
+                    POSApi.menu(function (data) {
                         if (null != data) {
                             callback(data.menu);
                         }
                     });
                 }
             },
-            orders: function(cached, callback) {
+            orders: function (cached, callback) {
                 if (cached) {
-                    Session.getCached('orders', function(loaderCallback) {
-                        POSApi.orders(function(data) {
+                    Session.getCached('orders', function (loaderCallback) {
+                        POSApi.orders(function (data) {
                             if (null != data) {
                                 loaderCallback(data.orders);
                             }
                         });
-                    }, function(data) {
+                    }, function (data) {
                         callback(data);
                     });
                 } else {
-                    POSApi.orders(function(data) {
+                    POSApi.orders(function (data) {
                         if (null != data) {
                             callback(data.orders);
                         }
                     });
                 }
             },
-            confirm: function(req, callback) {
-                POSApi.confirm(req, function(data) {
+            confirm: function (req, callback) {
+                POSApi.confirm(req, function (data) {
                     if (null != data) {
                         callback(data);
                     }
                 });
             },
-            tax: function(req, callback) {
+            tax: function (req, callback) {
                 var ret = {};
                 ret.food = req.total
                 ret.tax = req.total * req.tax / 100;
                 ret.total = ret.food + ret.tax;
                 callback(ret);
             },
-            payment: function(req, callback) {
+            payment: function (req, callback) {
                 LostAndFoundService.checkAccountNumber({
                     accountNumber: req.payment.card
-                }, function(data) {
+                }, function (data) {
                     if (data.status) {
                         callback({
                             id: req.id,
@@ -228,10 +228,10 @@ angular.module('pos.services', [])
         };
         return ret;
     })
-    .factory('LostAndFoundService', function(LostAndFoundApi, Session) {
+    .factory('LostAndFoundService', function (LostAndFoundApi, Session) {
         var ret = {
-            checkAccountNumber: function(req, callback) {
-                LostAndFoundApi.checkAccountNumber(req, function(data) {
+            checkAccountNumber: function (req, callback) {
+                LostAndFoundApi.checkAccountNumber(req, function (data) {
                     if (null != data.Account) {
                         if (data.Account.Listed) {
                             callback({
