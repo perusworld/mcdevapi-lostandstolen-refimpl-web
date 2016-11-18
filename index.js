@@ -8,8 +8,8 @@ var MasterCardAPI = lostStolen.MasterCardAPI;
 
 var dummyData = [];
 var dummyDataFiles = ['www/data/menu.json', 'www/data/account-number.json'];
-dummyDataFiles.forEach(function (file) {
-    fs.readFile(file, 'utf8', function (err, data) {
+dummyDataFiles.forEach(function(file) {
+    fs.readFile(file, 'utf8', function(err, data) {
         if (err) {
             return console.log(err);
         }
@@ -41,28 +41,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('www'));
 
-app.post('/menu', function (req, res) {
-    if (useDummyData) {
-        res.json(dummyData[dummyDataFiles[0]]);
-    } else {
-    }
+app.post('/menu', function(req, res) {
+    res.json(dummyData[dummyDataFiles[0]]);
 });
 
-app.post('/orders', function (req, res) {
-    if (useDummyData) {
-        res.json({});
-    } else {
-    }
+app.post('/orders', function(req, res) {
+    res.json({});
 });
 
-app.post('/confirm', function (req, res) {
-    if (useDummyData) {
-        res.json({});
-    } else {
-    }
+app.post('/confirm', function(req, res) {
+    res.json({});
 });
 
-app.post('/checkAccountNumber', function (req, res) {
+app.post('/checkAccountNumber', function(req, res) {
     if (useDummyData) {
         if (null == dummyData[dummyDataFiles[1]][req.body.accountNumber]) {
             res.json(dummyData[dummyDataFiles[1]].default);
@@ -75,7 +66,7 @@ app.post('/checkAccountNumber', function (req, res) {
                 "AccountNumber": req.body.accountNumber
             }
         };
-        lostStolen.AccountInquiry.update(requestData, function (error, data) {
+        lostStolen.AccountInquiry.update(requestData, function(error, data) {
             if (error) {
                 console.error("An error occurred");
                 console.dir(error, { depth: null });
@@ -95,6 +86,6 @@ app.post('/checkAccountNumber', function (req, res) {
     }
 });
 
-app.listen(3000, function () {
+app.listen(3000, function() {
     console.log('Example app listening on port 3000!');
 });
