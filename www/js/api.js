@@ -59,7 +59,31 @@ angular.module('pos.api', [])
         return ret;
     }])
 
-    .service('POSApi', ['$http', 'RandomOrdersApi', function ($http, RandomOrdersApi) {
+    .service('DummyAccountsList', [function () {
+        var ret = {
+            dummyData: null,
+            get: function (accountNumber) {
+                var ret = ret.dummyData[req.accountNumber];
+                if (null == ret) {
+                    ret = ret.dummyData.default;
+                }
+                return ret;
+            },
+            getResponse: function (POSApi, req, callback) {
+                if (null == ret.dummyData) {
+                    POSApi.getJson("account-number.json", function (data) {
+                        ret.dummyData = data;
+                        callback(ret.get(req.accountNumber));
+                    });
+                } else {
+                    callback(ret.get(req.accountNumber));
+                }
+            }
+        };
+        return ret;
+    }])
+
+    .service('POSApi', ['$http', 'RandomOrdersApi', 'DummyAccountsList', function ($http, RandomOrdersApi, DummyAccountsList) {
         var ret = {
             getJson: function (file, callback) {
                 $http.get('/data/' + file).then(function successCallback(response) {
@@ -99,6 +123,13 @@ angular.module('pos.api', [])
                     }
                 }, function errorCallback(response) {
                     RandomOrdersApi.confirmOrder(req, callback);
+                });
+            },
+            checkAccountNumber: function (req, callback) {
+                $http.post('/checkAccountNumber', req).then(function successCallback(response) {
+                    callback(response.data)
+                }, function errorCallback(response) {
+                    DummyAccountsList.getResponse(ret, req, callback);
                 });
             }
         };
