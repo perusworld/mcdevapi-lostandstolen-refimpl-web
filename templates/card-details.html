@@ -7,10 +7,11 @@
                     <span class="input-label">Name</span>
                     <input type="text" ng-model="payment.name">
                 </label>
-                <label class="item item-input">
+                <div class="item item-input item-button-right">
                     <span class="input-label">Card</span>
-                    <input type="text" ng-model="payment.card" placeholder="xxxx-xxxx-xxxx-xxxx">
-                </label>
+                    <input type="text" ng-model="payment.card" placeholder="xxxx-xxxx-xxxx-xxxx"/>
+                    <button title="Choose from a list of example cards" class="button button-positive" ng-click="chooseCard()"><i class="icon ion-code-download"></i></button>
+                </div>
                 <label class="item item-input">
                     <span class="input-label">Expiry Date</span>
                     <input type="month" ng-model="payment.expiry" placeholder="mm/yy">

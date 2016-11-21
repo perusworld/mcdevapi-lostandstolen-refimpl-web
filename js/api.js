@@ -70,13 +70,18 @@ angular.module('pos.api', [])
                 return resp;
             },
             getResponse: function (POSApi, req, callback) {
+                ret.getList(function (data) {
+                    callback(ret.get(req.accountNumber));
+                });
+            },
+            getList: function (POSApi, callback) {
                 if (null == ret.dummyData) {
                     POSApi.getJson("account-number.json", function (data) {
                         ret.dummyData = data;
-                        callback(ret.get(req.accountNumber));
+                        callback(data);
                     });
                 } else {
-                    callback(ret.get(req.accountNumber));
+                    callback(ret.dummyData);
                 }
             }
         };
@@ -108,7 +113,7 @@ angular.module('pos.api', [])
                     }, function errorCallback(response) {
                         callback(null);
                     });
-                });
+                });            
             },
             menu: function (callback) {
                 var data = {
@@ -147,4 +152,3 @@ angular.module('pos.api', [])
         return ret;
 
     }]);
-

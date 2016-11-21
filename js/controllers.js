@@ -59,11 +59,33 @@ angular.module('pos.controllers', [])
         };
     }])
 
-    .controller('CardDetailsCtrl', ['$scope', '$state', 'POSService', 'orderCart', 'dongleSwipe', function ($scope, $state, POSService, orderCart, dongleSwipe) {
+    .controller('CardDetailsCtrl', ['$scope', '$state', '$ionicModal', 'POSService', 'POSApi', 'orderCart', 'dongleSwipe', 'DummyAccountsList', function ($scope, $state, $ionicModal, POSService, POSApi, orderCart, dongleSwipe, DummyAccountsList) {
         $scope.orderCart = orderCart;
         $scope.dongleSwipe = dongleSwipe;
+        $scope.accounts = {};
         var dte = new Date();
         dte.setFullYear(dte.getFullYear() + 1);
+
+        $ionicModal.fromTemplateUrl('templates/choose-card.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+        $scope.chooseCard = function () {
+            $scope.modal.show();
+        };
+        $scope.closeModal = function () {
+            $scope.modal.hide();
+        };
+        $scope.$on('$destroy', function () {
+            $scope.modal.remove();
+        });
+        $scope.$on('$ionicView.enter', function () {
+            DummyAccountsList.getList(POSApi, function (data) {
+                $scope.accounts = data;
+            });
+        });
 
         $scope.$on('$ionicView.beforeEnter', function () {
             if (dongleSwipe.connected) {
@@ -157,9 +179,10 @@ angular.module('pos.controllers', [])
     }])
 
     .controller('PaymentDoneCtrl', ['$scope', '$state', '$ionicHistory', '$ionicLoading', '$ionicNavBarDelegate', 'orderCart', function ($scope, $state, $ionicHistory, $ionicLoading, $ionicNavBarDelegate, orderCart) {
-        $scope.confirmation = orderCart.response;
+        $scope.confirmation = {};
 
         $scope.$on('$ionicView.beforeEnter', function () {
+            $scope.confirmation = orderCart.response;
             $ionicNavBarDelegate.showBackButton(false);
             orderCart.clear();
 
