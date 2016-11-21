@@ -1,0 +1,14 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Choose A Sample Card</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <ion-list>
+            <ion-list>
+                <ion-radio ng-repeat="(key, value) in accounts" ng-if="key != 'default' && key != 'defaultError'" ng-model="payment.card" ng-value="key">{{key}} - {{value.data.Errors.Error.ReasonCode || value.Account.Reason}}</ion-radio>
+            </ion-list>
+            <button class="button button-full button-positive" ng-click="closeModal()">Apply</button>
+        </ion-list>
+    </ion-content>
+</ion-modal-view>
