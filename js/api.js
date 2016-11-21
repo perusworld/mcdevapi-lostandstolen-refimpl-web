@@ -70,7 +70,7 @@ angular.module('pos.api', [])
                 return resp;
             },
             getResponse: function (POSApi, req, callback) {
-                ret.getList(function (data) {
+                ret.getList(POSApi, function (data) {
                     callback(ret.get(req.accountNumber));
                 });
             },
